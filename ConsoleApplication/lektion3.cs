@@ -14,7 +14,7 @@ namespace ConsoleApplication
             
             
             
-            Console.WriteLine("skriv plus, minus, gange eller dividere");
+            Console.WriteLine("skriv plus, minus, gange eller dividere eller skriv det med tegn");
             string kommando = Console.ReadLine();
            
             Console.WriteLine("første tal");
@@ -22,8 +22,13 @@ namespace ConsoleApplication
             float talX;
             if (float.TryParse(x,out talX) == false)
             {
-                Console.WriteLine("fejl prøv et tal");
-                return;
+                Console.WriteLine("fejl prøv med et tal");
+                                x = Console.ReadLine();
+                if (float.TryParse(x,out talX) == false)
+                 {
+                    Console.WriteLine("fejl IGEN");
+                    return;
+                } 
             }
          
 
@@ -48,26 +53,38 @@ namespace ConsoleApplication
             
                Console.Write("Det er ");
                 Console.WriteLine(talX + talY);
+                return;
             }
             else if (kommando=="minus" ||kommando=="-")
             {
                 Console.Write("Det er ");
                 Console.WriteLine(talX - talY);
+                return;
             }
             else if (kommando=="gange" ||kommando=="*")
             {
                 Console.Write("Det er ");
-                Console.WriteLine(talX * talY);           
+                Console.WriteLine(talX * talY); 
+                return;         
 
             }             
             else if (kommando=="dividere" ||kommando=="/")
             {
                 Console.Write("Det er ");
-                Console.WriteLine(talX / talY);           
+                Console.WriteLine(talX / talY);    
+                return;       
             }
+           
+
+                        
         
 
 
+
+
+
+        
+        
         }
     }
 }
