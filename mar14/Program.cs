@@ -5,29 +5,34 @@ namespace ConsoleApplication
     public class Program
     {
         public static void Main(string[] args)
+
+        
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
-        Console.WriteLine("hvor stor skal pladen være (4-9)");
-        int boardsize = int.Parse(Console.ReadLine()); 
-        while (boardsize < 4 || boardsize > 9)
-            {
-                Console.WriteLine("ugyltigt nummer prøv igen");
-                boardsize = int.Parse(Console.ReadLine());
-            }
+            var player = new Player();
+            player.
+
+        //     Console.OutputEncoding = System.Text.Encoding.UTF8;
+        // Console.WriteLine("hvor stor skal pladen være (4-9)");
+        // int boardsize = int.Parse(Console.ReadLine()); 
+        // while (boardsize < 4 || boardsize > 9)
+        //     {
+        //         Console.WriteLine("ugyltigt nummer prøv igen");
+        //         boardsize = int.Parse(Console.ReadLine());
+        //     }
+            int boardsize = 9;
+            // var board = new bool[boardsize] [];
+            // var shots = new char[boardsize][];
+            // for (int i = 0; i < boardsize; i++)
+            // {
+            //   board[i] = new bool[boardsize];
+            //   shots[i] = new char[boardsize];
+            //   for (int j = 0; j < boardsize; j++)
+            //   {
+            //       board[i][j] = false;
+            //       shots[i][j] = ' ';
+            //   }
             
-            var board = new bool[boardsize] [];
-            var shots = new char[boardsize][];
-            for (int i = 0; i < boardsize; i++)
-            {
-              board[i] = new bool[boardsize];
-              shots[i] = new char[boardsize];
-              for (int j = 0; j < boardsize; j++)
-              {
-                  board[i][j] = false;
-                  shots[i][j] = ' ';
-              }
-            
-            }
+            // }
 
             int shipsize = 3;
             int maxCoordinate = boardsize - shipsize + 1;
@@ -60,20 +65,32 @@ namespace ConsoleApplication
 
             Console.WriteLine("hvor skal skibet være (y-koordinat) 1-{0}", ishorizontal ? boardsize : maxCoordinate);
             int shipY = int.Parse(Console.ReadLine())-1;
+            
+            player.placeShip(ishorizontal, shipX, shipY);
 
-             for(int i = 0; i< shipsize; i++)
-             {
-                int x=shipX
-                int y=shipY
-                board[x][y] = true;
+            //  for(int i = 0; i< shipsize; i++)
+            //  {
+            //     int x = ishorizontal
+            //     ? shipX + i
+            //     : shipY;
+                
+            //     int y = ishorizontal
+            //     ? shipX
+            //     : shipY + i;
+                
+                
+                
+                
+            //     board[x][y] = true;
                  
 
-             }
+            //  }
           
             // skibets placering
-            board[shipX][shipY] = true;
+
             bool isHit = false;
-            while (isHit == false )
+            bool issunk = false;
+            while (issunk == false )
             {
 
 
@@ -85,26 +102,31 @@ namespace ConsoleApplication
                 Console.WriteLine("hvor vil du skyde hen (y-koordinat)?");
                 int shotY = int.Parse(Console.ReadLine())-1;
 
-                isHit = board[shotX][shotY];
+                isHit = player.shoot(shotX, shotY);
+                issunk = player.HasLost();
+             
+                // isHit = board[shotX][shotY];
+                // board[shotX][shotY] = false;
+                // issunk = IsShipSunk(board);
 
-                string hittext;
-                if (isHit)
-                {
-                    shots[shotY][shotX] = 'X';
-                    hittext = "du ramte";
+                // string hittext;
+                // if (isHit)
+                // {
+                //     shots[shotY][shotX] = 'X';
+                //     hittext = "du ramte";
 
-                }
-                else
-                {
-                    shots[shotY][shotX] = '*';
-                    hittext = "du missede";
-                }
+                // }
+                // else
+                // {
+                //     shots[shotY][shotX] = '*';
+                //     hittext = "du missede";
+                // }
                 string line = "  ";
                 string header ="   ";
 
                 for(int z=0; z<boardsize;z++)
                 {
-                    line = line + "- - -";
+                    line = line + "-- ";
                     header = header + $" {z+1}  ";
                 }
                
@@ -121,19 +143,35 @@ namespace ConsoleApplication
                     for (int x = 0; x < boardsize; x++)
                     {
                         Console.Write(" | ");
-                        Console.Write(shots[y][x]);
+                        Console.Write(player.shots[y][x]);
 
                     }
                     Console.WriteLine();
 
                 }
-
+                string hittext = isHit ? "Hit" : "Miss";
                 Console.WriteLine(hittext);
             }
 
 
         }
+            //  static bool IsShipSunk(bool[][] board)
+            // {
+            //  bool isNotsunk=false;
+            //  for (int x=0;x<board.Length; x++)
+            //  {
+            //  bool[]row= board[x];
+            //  for(int y=0;y<row.Length; y++)
+            //  {
+            //      isNotsunk |= row[y];
+            //  }
 
 
+            //  }
+            //  return isNotsunk == false;
+
+
+
+            }
     }
 }
