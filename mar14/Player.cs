@@ -1,85 +1,89 @@
 namespace ConsoleApplication
-{   class Player
+{
+    class Player
     {
         private bool[][] board;
-      private  char[][] shots;
+        public char[][] shots;
 
-      public Player()
-      {
-                  int boardsize = 9;
-         board = new bool[boardsize] [];
-         shots = new char[boardsize][];
+        public string name;
+
+        public Player()
+        {
+            int boardsize = 9;
+            board = new bool[boardsize][];
+            shots = new char[boardsize][];
             for (int i = 0; i < boardsize; i++)
             {
-              board[i] = new bool[boardsize];
-              shots[i] = new char[boardsize];
-              for (int j = 0; j < boardsize; j++)
-              {
-                  board[i][j] = false;
-                  shots[i][j] = ' ';
-              }
-            
+                board[i] = new bool[boardsize];
+                shots[i] = new char[boardsize];
+                for (int j = 0; j < boardsize; j++)
+                {
+                    board[i][j] = false;
+                    shots[i][j] = ' ';
+                }
+
             }
-      }
+        }
 
 
-      public void placeShip(bool ishorizontal, int shipX, int shipY)
+        public void placeShip(bool ishorizontal, int shipX, int shipY)
 
-      {
-                     int shipsize = 3;
-             for(int i = 0; i< shipsize; i++)
-             {
+        {
+            int shipsize = 3;
+            for (int i = 0; i < shipsize; i++)
+            {
                 int x = ishorizontal
                 ? shipX + i
-                : shipY;
-                
+                : shipX;
+
                 int y = ishorizontal
-                ? shipX
+                ? shipY
                 : shipY + i;
-             }
-      }
 
-        public bool shoot(int x,int y)
+                board[x][y] = true;
+            }
+        }
+
+        public bool shoot(int x, int y)
         {
-                            isHit = board[shotX][shotY];
-                board[shotX][shotY] = false;
-                issunk = IsShipSunk(board);
+            bool isHit = board[x][y];
+            board[x][y] = false;
 
-                string hittext;
-                if (isHit)
-                {
-                    shots[shotY][shotX] = 'X';
-                    hittext = "du ramte";
+            if (isHit)
+            {
+                shots[x][y] = 'X';
+            }
+            else
+            {
+                shots[x][y] = '*';
+            }
 
-                }
-                else
-                {
-                    shots[shotY][shotX] = '*';
-                    hittext = "du missede";
-                }
-               
+            return isHit;
         }
 
         public bool HasLost()
         {
-            return false;
+            bool isNotSunk = false;
+            for (int x = 0; x < board.Length; x++)
+            {
+                var row = board[x];
+                for (int y = 0; y < row.Length; y++)
+                {
+                    isNotSunk |= row[y];
+                }
+
+            }
+            return isNotSunk == false;
         }
+
+
+
+
+
 
 
 
 
 
     }
-}
-
-
-
-
-
-
-
-
-
-
-
 }
